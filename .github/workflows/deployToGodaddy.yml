@@ -1,0 +1,24 @@
+name: Deploy to GoDaddy
+
+# Controls when the workflow will run
+on:
+  push:
+    branches: [ master ]  # This ensures the workflow runs on pushes to the master branch
+
+# A single workflow job
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Specifies the runner environment
+
+    steps:
+    - uses: actions/checkout@v2  # Checks out your repository under $GITHUB_WORKSPACE
+
+    # FTP Deploy step
+    - name: FTP Deploy
+      uses: SamKirkland/FTP-Deploy-Action@4.1.0
+      with:
+        ftp-server: ${{ secrets.NODIFY_FTP_ADDRESS }}
+        ftp-username: ${{ secrets.NODIFY_FTP_USERNAME }}
+        ftp-password: ${{ secrets.NODIFY_FTP_PASSWORD }}
+        local-dir: .  # The local directory (in your repository) that you want to upload
+        # Add additional flags here if necessary
