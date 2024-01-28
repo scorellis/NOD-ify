@@ -20,5 +20,5 @@ jobs:
         ftp-server: ${{ secrets.NODIFY_FTP_ADDRESS }}
         ftp-username: ${{ secrets.NODIFY_FTP_USERNAME }}
         ftp-password: ${{ secrets.NODIFY_FTP_PASSWORD }}
-        local-dir: .  # The local directory (in your repository) that you want to upload
-        # Add additional flags here if necessary
+        local-dir: website/
+        server-dir: ./
