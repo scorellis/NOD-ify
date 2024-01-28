@@ -17,8 +17,8 @@ jobs:
     - name: FTP Deploy
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
-        ftp-server: ${{ secrets.NODIFY_FTP_ADDRESS }}
-        ftp-username: ${{ secrets.NODIFY_FTP_USERNAME }}
-        ftp-password: ${{ secrets.NODIFY_FTP_PASSWORD }}
+        server: ${{ secrets.NODIFY_FTP_ADDRESS }}
+        username: ${{ secrets.NODIFY_FTP_USERNAME }}
+        password: ${{ secrets.NODIFY_FTP_PASSWORD }}
         local-dir: website/
         server-dir: ./public_html/
