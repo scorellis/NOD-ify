@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negotiation Tools</title>
+    <link rel="icon" href="nodicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="container">
+        <h1>Negotiation Tools</h1>
+        <div style="margin-bottom: 20px;">
+            <label for="sentimentDropdown">Select Your Sentiment:</label>
+            <select id="sentimentDropdown" onchange="selectToolBySentiment()">
+                <option value="">Select a sentiment...</option>
+                <option value="Anger">Anger</option>
+                <option value="Collaborative">Collaborative</option>
+                <option value="Happy">Happy</option>
+                <option value="Fun">Fun</option>
+                <option value="Obstinate">Obstinate</option>
+                <option value="Uptight">Uptight</option>
+                <option value="Nervous">Nervous</option>
+            </select>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tool</th>
+                    <th>Description</th>
+                    <th>Usage</th>
+                </tr>
+            </thead>
+            <tbody id="toolsTableBody">
+                <!-- Rows will be added by the script -->
+            </tbody>
+        </table>
+        <button id="tableToggle" onclick="toggleTable()"><div class="icon">➕</div> Toggle Table</button>
+        <div id="timerContainer">
+            <div class="icon">&#9202;</div> Duration (in minutes): <input type="number" id="duration" value="10">
+            <div id="timer">10:00</div>
+        </div>
+        <div style="display: flex; justify-content: space-between; width: 100%;">
+            <button onclick="initializeToolsAndStartTimer()" class="large-button"><div class="icon">&#9654;</div> Start</button>
+            <button onclick="getNextTool()" class="large-button" id="nextToolButton" disabled><div class="icon">&#10145;</div> Next Tool</button>
+        </div>
+        <div id="round"></div>
+        <div id="tool"></div>
+        <div id="randomResult"></div>
+    </div>
+    <script>
+        const tools = [
+            { name: 'Mirror', description: 'Expansion, rapport: Repeat last 1 to 3 words. Repeat 1 to 3 words of the core concept.', sentiment: 'Obstinate' },
+            { name: 'Label', description: 'It seems like ...It sounds like ... It looks like ... It feels like ... A negative label is worth 7x. Address the negatives first. it\'s not a sin to get a bad deal...it\'s a sin for it to take a long time', sentiment: 'Anger' },
+            { name: 'Asking label', description: '[Too many Q\'s can agitate your counterpart] What do you call that?, Is there even a word in the dictionary for that? get them to label it', sentiment: 'Uptight' },
+            { name: 'Mis-label', description: 'Try and limit to 3 of these. It\'s a potent tool to elicit information. People have correction addiction.', sentiment: 'Nervous' },
+            { name: 'Vision label', description: 'Generally executed with a calibrated Questions. What projects are you working on? Where do you see yourself in five years?', sentiment: 'Happy' },
+            { name: 'Advanced label', description: 'Tonality is critical with this tool: I get the sense that...', sentiment: 'Nervous' },
+            { name: 'Clean Language', description: 'What kind of X is that X? Is there anything else about that X?', sentiment: 'Collaborative' },
+            { name: 'Elevation', description: 'Works well on Assertives and Accommodators. Analyticals might see it as a seduction tactic.', sentiment: 'Happy' },
+            { name: 'Minimal Encouragers', description: '"Oh, really?", "Tell me more", "I am listening.", "I hear you", "uh huh", "PREACH!"', sentiment: 'Fun' },
+            { name: 'Summary', description: 'Use a summary to trigger a "that\'s right." The building blocks of a good summary are a label combined with paraphrasing. Identify, rearticulate, and emotionally affirm "the world according to ..."', sentiment: 'Collaborative' },
+            { name: 'Paraphrase', description: 'Express the meaning using different words, especially to achieve greater clarity.', sentiment: 'Collaborative' },
+            { name: 'Calibrated Questions', description: 'What, How, and sometimes why questions. Eg: How does this fit? What makes you ask? How do we know your team is on board? Why would you want to do business with me?', sentiment: 'Collaborative' },
+            { name: 'Loss Aversion', description: 'Losses lead to more extreme emotional responses than gains. The pain of losing is psychologically twice as powerful as the pleasure of gaining.', sentiment: 'Anger' },
+            { name: 'Dynamic Silence', description: 'Silence is uncomfortable and awkward. Plan on being silent for 3+ seconds. Counterpart will usually break silence in 7 seconds. Try counting in your head to help pass the time. Use any tool afterward.', sentiment: 'Nervous' },
+            { name: 'Trigger', description: 'Cause a strong emotional reaction of fear, shock, anger, or worry in someone, especially because they are made to remember something bad that has happened in the past.', sentiment: 'Anger' },
+            { name: 'No Oriented Question', description: 'Have you given up on ...? Is it ridiculous ...? Would it be horrible ...? Is it a bad idea ...?', sentiment: 'Obstinate' },
+            { name: 'Accusation Audit', description: 'Instead of denying it - you call it out. "It probably seems like..." whatever it may be.', sentiment: 'Uptight' }
+        ];
+
+        let tableVisible = true;
+        let currentTools = [];
+        let usedTools = [];
+        let timer = null;
+        let endTime = null;
+
+        function toggleTable() {
+            const table = document.querySelector('table');
+            if (tableVisible) {
+                table.style.display = 'none';
+                tableVisible = false;
+                document.getElementById('tableToggle').innerHTML = '<div class="icon">➖</div> Toggle Table';
+            } else {
+                table.style.display = 'table';
+                tableVisible = true;
+                document.getElementById('tableToggle').innerHTML = '<div class="icon">➕</div> Toggle Table';
+            }
+        }
+
+        function displayToolsInTable() {
+            const tbody = document.getElementById('toolsTableBody');
+            tools.forEach(tool => {
+                const row = document.createElement('tr');
+                const nameCell = document.createElement('td');
+                const descCell = document.createElement('td');
+                const countCell = document.createElement('td');
+                const input = document.createElement('input');
+
+                input.type = 'number';
+                input.value = tool.name === 'Dynamic Silence' ? 3 : 1;
+                input.id = tool.name.replace(/ /g, '_');
+
+                nameCell.textContent = tool.name;
+                descCell.textContent = tool.description;
+                countCell.appendChild(input);
+
+                row.appendChild(nameCell);
+                row.appendChild(descCell);
+                row.appendChild(countCell);
+
+                tbody.appendChild(row);
+            });
+        }
+
+        function selectToolBySentiment() {
+            const sentiment = document.getElementById('sentimentDropdown').value;
+            if (!sentiment) {
+                displayTool({ name: 'No Tool Selected', description: 'Please select a sentiment to see the recommended tool.' });
+                return;
+            }
+
+            const matchingTools = tools.filter(tool => tool.sentiment === sentiment);
+            if (matchingTools.length > 0) {
+                // If there are multiple tools for a sentiment, pick one at random
+                const selectedTool = matchingTools[Math.floor(Math.random() * matchingTools.length)];
+                displayTool(selectedTool);
+            } else {
+                displayTool({ name: 'No Matching Tool', description: 'No tool matches the selected sentiment.' });
+            }
+        }
+
+        function displayTool(tool) {
+            document.getElementById('tool').innerHTML = `
+                <h2>${tool.name}</h2>
+                <p>${tool.description}</p>
+            `;
+        }
+
+        function initializeToolsAndStartTimer() {
+            resetCurrentTools();
+            const duration = parseInt(document.getElementById('duration').value);
+            endTime = Date.now() + duration * 60 * 1000; // Convert to milliseconds
+            timer = setInterval(updateTimer, 1000);
+            document.getElementById("nextToolButton").disabled = false;
+        }
+
+        function resetCurrentTools() {
+            currentTools = [];
+            tools.forEach(tool => {
+                const toolCount = parseInt(document.getElementById(tool.name.replace(/ /g, '_')).value);
+                for (let i = 0; i < toolCount; i++) {
+                    currentTools.push(tool);
+                }
+           
