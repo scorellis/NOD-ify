@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Negotiation Tools</title>
-    <link rel="icon" href="http://nod-ify.com/nodicon.ico" type="image/x-icon">
+    <link rel="icon" href="nodicon.ico" type="image/x-icon">
     <style>
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5e9dc; /* Warm background color */
+            background-color: #f7f9fc;
             color: #333;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
         }
 
         #container {
@@ -23,15 +23,14 @@
             max-width: 800px;
             padding: 40px;
             background-color: #fff;
-            border-radius: 20px; /* Slightly increased border-radius */
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Soft shadow */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             text-align: center;
-            margin-top: 40px; /* Increased top margin */
         }
 
         h1 {
-            color: #e86f68; /* Warm title color */
-            font-size: 42px; /* Increased title font size */
+            color: #4CAF50;
+            font-size: 36px;
             margin-bottom: 20px;
         }
 
@@ -59,9 +58,9 @@
             margin: 10px;
             border: none;
             cursor: pointer;
-            border-radius: 10px; /* Rounded corners for buttons */
+            border-radius: 5px;
             color: #fff;
-            background-color: #e86f68; /* Warm button color */
+            background-color: #4CAF50;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -69,11 +68,11 @@
         }
 
         .large-button:last-child {
-            background-color: #ffcc29; /* Warm secondary button color */
+            background-color: #008CBA;
         }
 
         .large-button:hover {
-            background-color: #d85751; /* Darker color on hover */
+            background-color: #45a049;
         }
 
         .icon {
@@ -91,8 +90,8 @@
         #timer {
             width: 120px;
             height: 40px;
-            background-color: #e86f68; /* Warm timer color */
-            border: 2px solid #b7544d; /* Slightly darker border */
+            background-color: #4CAF50;
+            border: 2px solid #388E3C;
             border-radius: 5px;
             display: flex;
             justify-content: center;
@@ -112,33 +111,13 @@
             margin: 10px;
             border: none;
             cursor: pointer;
-            border-radius: 10px; /* Rounded corners for toggle button */
+            border-radius: 5px;
             color: #fff;
-            background-color: #e86f68; /* Warm button color */
+            background-color: #4CAF50;
             display: flex;
             justify-content: center;
             align-items: center;
             transition: background-color 0.3s ease;
-        }
-
-        .tool-frame {
-            width: calc(50% - 20px);
-            height: 200px;
-            margin: 10px;
-            border: 2px solid #ddd;
-            border-radius: 20px; /* Rounded corners for tool frames */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .tool-frame h3 {
-            margin: 10px 0;
-        }
-
-        .tool-frame p {
-            margin: 0;
         }
     </style>
 </head>
@@ -159,26 +138,17 @@
         </table>
         <button id="tableToggle" onclick="toggleTable()"><div class="icon">➕</div> Toggle Table</button>
         <div id="timerContainer">
-            <div class="icon">⏲</div> Duration (in minutes): <input type="number" id="duration" value="10">
+            <div class="icon">&#9202;</div> Duration (in minutes): <input type="number" id="duration" value="10">
             <div id="timer">10:00</div>
         </div>
         <div style="display: flex; justify-content: space-between; width: 100%;">
-            <button onclick="initializeToolsAndStartTimer()" class="large-button"><div class="icon">▶</div> Start</button>
-            <button onclick="getNextTool()" class="large-button" id="nextToolButton" disabled=""><div class="icon">➡</div> Next Tool</button>
+            <button onclick="initializeToolsAndStartTimer()" class="large-button"><div class="icon">&#9654;</div> Start</button>
+            <button onclick="getNextTool()" class="large-button" id="nextToolButton" disabled><div class="icon">&#10145;</div> Next Tool</button>
         </div>
+        <div id="round"></div>
         <div id="tool"></div>
-        <div style="display: flex; justify-content: space-between;">
-            <div class="tool-frame" id="previousToolFrame">
-                <h3>Previous Tool</h3>
-                <p id="previousTool"></p>
-            </div>
-            <div class="tool-frame" id="nextToolFrame">
-                <h3>Next Tool</h3>
-                <p id="nextTool"></p>
-            </div>
-        </div>
+        <div id="randomResult"></div>
     </div>
-
     <script>
         // JavaScript functions for your functionality can go here
         let tableVisible = true;
@@ -196,8 +166,10 @@
             }
         }
     </script>
+</body>
+</html>
 
-    <script>
+<script>
         const tools = [
             { name: 'Mirror', description: 'Expansion, rapport: Repeat last 1 to 3 words. Repeat 1 to 3 words of the core concept.' },
             { name: 'Label', description: 'It seems like ...It sounds like ... It looks like ... It feels like ... A negative label is worth 7x. Address the negatives first. it\'s not a sin to get a bad deal...it\'s a sin for it to take a long time' },
@@ -218,112 +190,106 @@
             { name: 'Accusation Audit', description: 'Instead of denying it - you call it out. "It probably seems like..." whatever it may be.' }
         ];
 
-        function displayToolsInTable() {
-            const tbody = document.getElementById('toolsTableBody');
-            tools.forEach(tool => {
-                const row = document.createElement('tr');
-                const nameCell = document.createElement('td');
-                const descCell = document.createElement('td');
-                const countCell = document.createElement('td');
-                const input = document.createElement('input');
+    function displayToolsInTable() {
+        const tbody = document.getElementById('toolsTableBody');
+        tools.forEach(tool => {
+            const row = document.createElement('tr');
+            const nameCell = document.createElement('td');
+            const descCell = document.createElement('td');
+            const countCell = document.createElement('td');
+            const input = document.createElement('input');
 
-                input.type = 'number';
-                input.value = tool.name === 'Dynamic Silence' ? 3 : 1;
-                input.id = tool.name.replace(/ /g, '_');
+            input.type = 'number';
+            input.value = tool.name === 'Dynamic Silence' ? 3 : 1;
+            input.id = tool.name.replace(/ /g, '_');
 
-                nameCell.textContent = tool.name;
-                descCell.textContent = tool.description;
-                countCell.appendChild(input);
+            nameCell.textContent = tool.name;
+            descCell.textContent = tool.description;
+            countCell.appendChild(input);
 
-                row.appendChild(nameCell);
-                row.appendChild(descCell);
-                row.appendChild(countCell);
+            row.appendChild(nameCell);
+            row.appendChild(descCell);
+            row.appendChild(countCell);
 
-                tbody.appendChild(row);
-            });
+            tbody.appendChild(row);
+        });
+    }
+
+    let currentTools = [];
+    let usedTools = [];
+    let timer = null;
+    let endTime = null;
+
+    function initializeToolsAndStartTimer() {
+        resetCurrentTools();
+
+        const duration = parseInt(document.getElementById('duration').value);
+        endTime = Date.now() + duration * 60 * 1000; // Convert to milliseconds
+        timer = setInterval(updateTimer, 1000);
+
+        document.getElementById("nextToolButton").disabled = false;
+    }
+
+    function resetCurrentTools() {
+        currentTools = [];
+        tools.forEach(tool => {
+            const toolCount = parseInt(document.getElementById(tool.name.replace(/ /g, '_')).value);
+            for (let i = 0; i < toolCount; i++) {
+                currentTools.push(tool);
+            }
+        });
+
+        // Shuffle currentTools array for randomness
+        for (let i = currentTools.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [currentTools[i], currentTools[j]] = [currentTools[j], currentTools[i]];
         }
+    }
 
-        let currentTools = [];
-        let usedTools = [];
-        let timer = null;
-        let endTime = null;
-
-        function initializeToolsAndStartTimer() {
+    function getNextTool() {
+        if (currentTools.length === 0) {
             resetCurrentTools();
-
-            const duration = parseInt(document.getElementById('duration').value);
-            endTime = Date.now() + duration * 60 * 1000; // Convert to milliseconds
-            timer = setInterval(updateTimer, 1000);
-
-            document.getElementById("nextToolButton").disabled = false;
-            getNextTool(); // Display the first tool when starting
         }
 
-        function resetCurrentTools() {
-            currentTools = [];
-            tools.forEach(tool => {
-                const toolCount = parseInt(document.getElementById(tool.name.replace(/ /g, '_')).value);
-                for (let i = 0; i < toolCount; i++) {
-                    currentTools.push(tool);
-                }
-            });
-
-            // Shuffle currentTools array for randomness
-            for (let i = currentTools.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [currentTools[i], currentTools[j]] = [currentTools[j], currentTools[i]];
-            }
+        if (Date.now() > endTime) {
+            clearInterval(timer);
+            document.getElementById('tool').innerHTML = '<h2>Session complete!</h2>';
+            document.getElementById('timer').innerHTML = 'Time left: 00:00';
+            document.getElementById("nextToolButton").disabled = true;
+            return;
         }
 
-        function getNextTool() {
-            if (currentTools.length === 0) {
-                resetCurrentTools();
-            }
+        const nextTool = currentTools.pop();
+        usedTools.push(nextTool);
 
-            if (Date.now() > endTime) {
-                clearInterval(timer);
-                document.getElementById('tool').innerHTML = '<h2>Session complete!</h2>';
-                document.getElementById('timer').innerHTML = 'Time left: 00:00';
-                document.getElementById("nextToolButton").disabled = true;
-                return;
-            }
+        displayTool(nextTool);
+    }
 
-            const nextTool = currentTools.pop();
-            const currentTool = document.getElementById('tool').innerHTML;
-            usedTools.push(currentTool);
-            displayTool(nextTool);
-            document.getElementById('previousTool').innerHTML = currentTool;
-            if (currentTools.length > 0) {
-                document.getElementById('nextTool').innerHTML = currentTools[currentTools.length - 1].name;
-            } else {
-                document.getElementById('nextTool').innerHTML = "No tools left";
-            }
+    function displayTool(tool) {
+        document.getElementById('tool').innerHTML = `
+            <h2>${tool.name}</h2>
+            <p>${tool.description}</p>
+        `;
+    }
+
+    function updateTimer() {
+        const timeLeft = endTime - Date.now();
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            document.getElementById('tool').innerHTML = '<h2>Session complete!</h2>';
+            document.getElementById('timer').innerHTML = 'Time left: 00:00';
+            document.getElementById("nextToolButton").disabled = true;
+            return;
         }
 
-        function displayTool(tool) {
-            document.getElementById('tool').innerHTML = `
-                <h2>${tool.name}</h2>
-                <p>${tool.description}</p>
-            `;
-        }
+        const minutesLeft = Math.floor(timeLeft / (60 * 1000));
+        const secondsLeft = Math.floor((timeLeft % (60 * 1000)) / 1000);
 
-        function updateTimer() {
-            const timeLeft = endTime - Date.now();
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                document.getElementById('tool').innerHTML = '<h2>Session complete!</h2>';
-                document.getElementById('timer').innerHTML = 'Time left: 00:00';
-                document.getElementById("nextToolButton").disabled = true;
-                return;
-            }
+        document.getElementById('timer').textContent = `Time left: ${String(minutesLeft).padStart(2, '0')}:${String(secondsLeft).padStart(2, '0')}`;
+    }
 
-            const minutesLeft = Math.floor(timeLeft / (60 * 1000));
-            const secondsLeft = Math.floor((timeLeft % (60 * 1000)) / 1000);
+    displayToolsInTable();
+</script>
 
-            document.getElementById('timer').textContent = `Time left: ${String(minutesLeft).padStart(2, '0')}:${String(secondsLeft).padStart(2, '0')}`;
-        }
-
-        displayToolsInTable();
-    </script>
 </body>
 </html>
