@@ -1,0 +1,153 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e0e7ff; /* Light blue, calming and conducive to learning */
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+@media print {
+    body * {
+        display: none !important; /* Forces all elements to not display */
+    }
+    #printSection, #printSection * {
+        display: block !important; /* Forces print section to display */
+        visibility: visible !important;
+    }
+    #printSection {
+        position: fixed; /* Changed from absolute to fixed */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+        z-index: 10000; /* Ensures it is on top */
+    }
+}
+#navbar {
+    width: 100%;
+    background-color: #333652; /* Dark blue-gray, provides good contrast for readability */
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+#navbar a {
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+#navbar a:hover {
+    background-color: #454c75; /* Slightly lighter shade for hover effect */
+}
+
+#overallImpressions {
+    width: 100%; /* Maximizes the width to the container size */
+    height: 300px; /* Significantly increases the height */
+    padding: 10px; /* Adds some internal padding for text */
+    box-sizing: border-box; /* Includes padding in the height and width */
+}
+
+#container {
+    width: 90%;
+    max-width: 800px;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin-top: 40px;
+}
+
+h1 {
+    color: #4CAF50;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    border: 2px solid #ddd;
+    padding: 16px;
+    text-align: left;
+    font-size: 18px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.large-button, #tableToggle {
+    width: 100%;
+    height: 60px;
+    font-size: 18px;
+    margin: 10px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    color: #fff;
+    background-color: #e86f68;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.large-button:hover, #tableToggle:hover {
+    background-color: #d85751;
+}
+
+#timerContainer {
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#timer {
+    width: 120px;
+    height: 40px;
+    background-color: #4CAF50;
+    border: 2px solid #388E3C;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    margin-top: 10px;
+}
+
+#toolsTableBody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.tool-frame {
+    width: calc(50% - 20px);
+    height: 200px;
+    margin: 10px;
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tool-frame h3 {
+    margin: 10px 0;
+}
+
+.tool-frame p {
+    margin: 0;
+}
