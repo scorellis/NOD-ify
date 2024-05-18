@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negotiation Tools</title>
+    <link rel="icon" href="includes/nodicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="includes/vNextStyles.css">
+</head>
+<body>
+    <div id="navbar">
+        <a href="index.html">Home</a>
+        <a href="vNext.html">vNext</a>
+        <a href="ScoreCard.html">Score Card</a>
+        <a href="Resources.html">Resources</a>
+        <a href="vNextScoreCard.html">vNext Score Card</a>
+    </div>
+    <div class="container">
+        <h1>Negotiation Tools</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tool</th>
+                    <th>Click Me</th>
+                    <th>Usage</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody id="toolsTableBody">
+                <!-- Rows will be added by the script -->
+            </tbody>
+        </table>
+        <textarea id="overallImpressions" placeholder="Overall Impressions"></textarea>
+        <div class="buttons">
+            <button id="resetButton">Reset</button>
+            <button id="printButton">Print Summary</button> <!-- Renamed for clarity -->
+        </div>
+    </div>
+
+    <script>
+        const tools = [
+            { name: 'NO TOOL USED'},
+            { name: 'Accusation Audit'},
+            { name: 'Advanced Label'},
+            { name: 'Asking label'},
+            { name: 'Calibrated Questions'},
+            { name: 'Clean Language'},
+            { name: 'Dynamic Silence'},
+            { name: 'Elevation'},
+            { name: 'Label'},
+            { name: 'Loss Aversion'},
+            { name: 'Minimal Encouragers'},
+            { name: 'Mirror'},
+            { name: 'Mis-label'},
+            { name: 'No Oriented Question'},
+            { name: 'Paraphrase'},
+            { name: 'Summary'},
+            { name: 'Trigger'},
+            { name: 'Vision label'}
+        ];
+
+        function displayToolsInTable() {
+            const tbody = document.getElementById('toolsTableBody');
+            tools.forEach(tool => {
+                const row = document.createElement('tr');
+                const nameCell = document.createElement('td');
+                const clickCell = document.createElement('td');
+                const countCell = document.createElement('td');
+                const notesCell = document.createElement('td');
+                const button = document.createElement('button');
+                const input = document.createElement('input');
+                const textArea = document.createElement('textarea');
+
+                button.textContent = 'Click Me';
+                button.addEventListener('click', () => {
+                    input.value = parseInt(input.value, 10) + 1;
+                });
+
+                input.type = 'number';
+                input.value = 0;
+                input.style.width = '50px';
+                textArea.style.height = '50px';
+
+                nameCell.textContent = tool.name;
+                clickCell.appendChild(button);
+                countCell.appendChild(input);
+                notesCell.appendChild(textArea);
+
+                row.appendChild(nameCell);
+                row.appendChild(clickCell);
+                row.appendChild(countCell);
+                row.appendChild(notesCell);
+
+                tbody.appendChild(row);
+            });
+        }
+
+        document.getElementById('printButton').addEventListener('click', () => {
+    const printSection = document.createElement('div');
+    printSection.id = 'printSection';
+    printSection.style.display = 'none';
+
+    let content = `<h1>Negotiation Tools Summary</h1>`;
+    content += `<p><strong>Overall Impressions:</strong> ${document.getElementById('overallImpressions').value}</p>`;
+    content += `<table><tr><th>Tool</th><th>Usage</th><th>Notes</th></tr>`;
+
+    const rows = document.querySelectorAll('#toolsTableBody tr');
+    rows.forEach(row => {
+        const toolName = row.cells[0].textContent;
+        const usage = row.cells[2].querySelector('input').value;
+        const notes = row.cells[3].querySelector('textarea').value;
+        content += `<tr><td>${toolName}</td><td>${usage}</td><td>${notes}</td></tr>`;
+    });
+
+    content += `</table>`;
+    printSection.innerHTML = content;
+    document.body.appendChild(printSection);
+
+    window.print();
+});
+
+        displayToolsInTable();
+    </script>
+</body>
+</html>
