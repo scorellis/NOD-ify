@@ -1,0 +1,134 @@
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5e9dc; /* Warm background color */
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #container {
+            width: 90%;
+            max-width: 800px;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 20px; /* Slightly increased border-radius */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Soft shadow */
+            text-align: center;
+            margin-top: 40px; /* Increased top margin */
+        }
+
+        h1 {
+            color: #e86f68; /* Warm title color */
+            font-size: 42px; /* Increased title font size */
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 2px solid #ddd;
+            padding: 16px;
+            text-align: left;
+            font-size: 18px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .large-button {
+            width: 45%;
+            height: 60px;
+            font-size: 18px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px; /* Rounded corners for buttons */
+            color: #fff;
+            background-color: #e86f68; /* Warm button color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .large-button:last-child {
+            background-color: #ffcc29; /* Warm secondary button color */
+        }
+
+        .large-button:hover {
+            background-color: #d85751; /* Darker color on hover */
+        }
+
+        .icon {
+            margin-right: 10px;
+        }
+
+        #timerContainer {
+            font-size: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #timer {
+            width: 120px;
+            height: 40px;
+            background-color: #e86f68; /* Warm timer color */
+            border: 2px solid #b7544d; /* Slightly darker border */
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        #toolsTableBody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #tableToggle {
+            width: 100%;
+            height: 60px;
+            font-size: 18px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px; /* Rounded corners for toggle button */
+            color: #fff;
+            background-color: #e86f68; /* Warm button color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .tool-frame {
+            width: calc(50% - 20px);
+            height: 200px;
+            margin: 10px;
+            border: 2px solid #ddd;
+            border-radius: 20px; /* Rounded corners for tool frames */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tool-frame h3 {
+            margin: 10px 0;
+        }
+
+        .tool-frame p {
+            margin: 0;
+        }
