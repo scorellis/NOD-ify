@@ -7,5 +7,5 @@
 * [nodify-13]: Made changes to add a counter and fix problem with buttons. 
 
 ## 1.5
-* [NOD-IFY-4] Broke Styles out into a separate sheet, created vNext. Created changelog.
+* [NOD-IFY-4] Broke Styles out into a separate file. Language changes. Created vNext.
 
