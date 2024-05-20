@@ -6,6 +6,15 @@
     <title>Negotiation Tools</title>
     <link rel="icon" href="includes/nodicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="includes/vNextStyles.css">
+    <style>
+        /* Page-specific styles */
+        table th, table td {
+            padding: 5px; /* Reduced padding for denser table rows */
+            font-size: 14px; /* Optional smaller font size for better table fit */
+            line-height: 1.2; /* Reduced line height for denser text */
+        }
+        /* Other specific styles can go here */
+    </style>
 </head>
 <body>
     <div id="navbar">
@@ -79,7 +88,7 @@
                 input.type = 'number';
                 input.value = 0;
                 input.style.width = '50px';
-                textArea.style.height = '50px';
+                textArea.style.height = '25px';
 
                 nameCell.textContent = tool.name;
                 clickCell.appendChild(button);

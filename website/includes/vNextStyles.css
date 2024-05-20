@@ -11,22 +11,29 @@ body {
 }
 @media print {
     body * {
-        display: none !important; /* Forces all elements to not display */
+        display: none !important; /* Hide all elements by default */
     }
     #printSection, #printSection * {
-        display: block !important; /* Forces print section to display */
+        display: block !important; /* Display only the print section and its children */
         visibility: visible !important;
     }
     #printSection {
-        position: fixed; /* Changed from absolute to fixed */
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: auto;
-        overflow: visible;
-        z-index: 10000; /* Ensures it is on top */
+        position: relative; /* Use relative instead of fixed or absolute to keep natural flow */
+        width: 100%; /* Fit to page width */
+        height: auto; /* Adjust height automatically */
+        overflow: visible; /* Ensure no content is hidden */
+        page-break-after: auto; /* Allows automatic page breaks after the section if needed */
+    }
+    #printSection * {
+        page-break-inside: avoid; /* Avoid breaking pages inside elements of the print section */
+    }
+    #printSection, #printSection * {
+        page-break-before: avoid; /* Adjust or remove this if it's causing issues */
+        page-break-after: avoid; /* Adjust or remove this if it's causing issues */
+        page-break-inside: avoid;
     }
 }
+
 #navbar {
     width: 100%;
     background-color: #333652; /* Dark blue-gray, provides good contrast for readability */
