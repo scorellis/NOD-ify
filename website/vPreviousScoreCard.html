@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negotiation Tools</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border: 2px solid #9c27b0;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #9c27b0;
+            color: #fff;
+        }
+
+        tr:hover {
+            background-color: #f3e5f5;
+        }
+
+        button {
+            background-color: #ffca28;
+            color: #333;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ffd54f;
+        }
+
+        .total {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        #totalSum {
+            font-weight: bold;
+            color: #ffca28;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #resetButton {
+            margin-right: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Negotiation Tools</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tool</th>
+                    <th>Click Me</th>
+                    <th>Usage</th>
+                </tr>
+            </thead>
+            <tbody id="toolsTableBody">
+                <!-- Rows will be added by the script -->
+            </tbody>
+        </table>
+
+        <div class="buttons">
+            <button id="resetButton">Reset</button>
+            <button id="sumButton">Display Total Sum</button>
+        </div>
+
+        <p class="total">Total Sum: <span id="totalSum">0</span></p>
+    </div>
+
+    <script>
+        const tools = [
+        { name: 'Accusation Audit'},
+        { name: 'Advanced Label'},
+        { name: 'Asking label'},
+        { name: 'Calibrated Questions'},
+        { name: 'Clean Language'},
+        { name: 'Dynamic Silence'},
+        { name: 'Elevation'},
+        { name: 'Label'},
+        { name: 'Loss Aversion'},
+        { name: 'Minimal Encouragers'},
+        { name: 'Mirror'},
+        { name: 'Mis-label'},
+        { name: 'No Oriented Question'},
+        { name: 'Paraphrase'},
+        { name: 'Summary'},
+        { name: 'Trigger'},
+        { name: 'Vision label'}
+
+        ];
+
+        function displayToolsInTable() {
+            const tbody = document.getElementById('toolsTableBody');
+            tools.forEach(tool => {
+                const row = document.createElement('tr');
+                const nameCell = document.createElement('td');
+                const clickCell = document.createElement('td');
+                const countCell = document.createElement('td');
+                const button = document.createElement('button');
+                const input = document.createElement('input');
+
+                button.textContent = 'Click Me';
+                button.style.backgroundColor = '#ffca28'; // yellow
+                button.addEventListener('click', () => {
+                    input.value = parseInt(input.value) + 1;
+                    updateTotalSum();
+                });
+
+                input.type = 'number';
+                input.value = tool.name === 'Dynamic Silence' ? 0 : 0;
+                input.id = tool.name.replace(/ /g, '_');
+                input.readOnly = true;
+
+                nameCell.textContent = tool.name;
+                clickCell.appendChild(button);
+                countCell.appendChild(input);
+
+                row.appendChild(nameCell);
+                row.appendChild(clickCell);
+                row.appendChild(countCell);
+
+                tbody.appendChild(row);
+            });
+        }
+
+        function updateTotalSum() {
+            let total = 0;
+            tools.forEach(tool => {
+                const input = document.getElementById(tool.name.replace(/ /g, '_'));
+                total += parseInt(input.value) || 0;
+            });
+            document.getElementById('totalSum').textContent = total;
+        }
+
+        function resetCounts() {
+            tools.forEach(tool => {
+                const input = document.getElementById(tool.name.replace(/ /g, '_'));
+                input.value = tool.name === 'Dynamic Silence' ? 0 : 0;
+            });
+            updateTotalSum();
+        }
+
+        displayToolsInTable();
+
+        document.getElementById('resetButton').addEventListener('click', resetCounts);
+        document.getElementById('sumButton').addEventListener('click', updateTotalSum);
+    </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Resources</title>
+    <link rel="icon" href="includes/nodicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="includes/vNextStyles.css">
+</head>
+<body>
+    <div id="navbar">
+        <a href="index.html">Home</a> | 
+        <a href="vNext.html">vNext</a> | 
+        <a href="ScoreCard.html">Score Card</a> | 
+        <a href="Resources.html">Resources</a> | 
+        <a href="vPrevious.html">vPrevious</a> | 
+        <a href="vNextScoreCard.html">vNext Score Card</a>
+    </div>
+    <div id="container">
+        <h1>Video Resources</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Video</th>
+                    <th>Description</th>
+                    <th>Thumbnail</th>
+                </tr>
+            </thead>
+            <tbody id="videoTableBody">
+                <!-- Rows will be added by the script -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const videos = [
+            { 
+                url: 'https://www.youtube.com/watch?v=exampleVideoId1', 
+                description: 'Description of video 1', 
+                thumbnail: 'https://img.youtube.com/vi/exampleVideoId1/0.jpg' 
+            },
+            { 
+                url: 'https://www.youtube.com/watch?v=exampleVideoId2', 
+                description: 'Description of video 2', 
+                thumbnail: 'https://img.youtube.com/vi/exampleVideoId2/0.jpg' 
+            }
+        ];
+
+        function displayVideosInTable() {
+            const tbody = document.getElementById('videoTableBody');
+            videos.forEach(video => {
+                const row = document.createElement('tr');
+                const linkCell = document.createElement('td');
+                const descCell = document.createElement('td');
+                const thumbCell = document.createElement('td');
+
+                linkCell.innerHTML = `<a href="${video.url}" target="_blank">Watch Video</a>`;
+                descCell.textContent = video.description;
+                thumbCell.innerHTML = `<img src="${video.thumbnail}" alt="Video Thumbnail" style="width: 120px; height: auto;">`;
+
+                row.appendChild(linkCell);
+                row.appendChild(descCell);
+                row.appendChild(thumbCell);
+
+                tbody.appendChild(row);
+            });
+        }
+
+        displayVideosInTable();
+    </script>
+</body>
+</html>
