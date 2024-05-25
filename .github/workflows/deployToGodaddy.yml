@@ -15,7 +15,7 @@ jobs:
 
     # FTP Deploy step
     - name: FTP Deploy
-      uses: SamKirkland/FTP-Deploy-Action@4.1.0
+      uses: SamKirkland/FTP-Deploy-Action@4.3.3
       with:
         server: ${{ secrets.NODIFY_FTP_ADDRESS }}
         username: ${{ secrets.NODIFY_FTP_USERNAME }}
