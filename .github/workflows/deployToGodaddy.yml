@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest  # Specifies the runner environment
 
     steps:
-    - uses: actions/checkout@v2  # Checks out your repository under $GITHUB_WORKSPACE
+    - uses: actions/checkout@v3  # Checks out your repository under $GITHUB_WORKSPACE
 
     # FTP Deploy step
     - name: FTP Deploy
