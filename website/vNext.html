@@ -36,7 +36,7 @@
             <button onclick="filterTools('Rapport')">Rapport</button>
             <button onclick="filterTools('Influence')">Influence</button>
             <button onclick="filterTools('Behavioral Change')">Behavioral Change</button>
-        </div>        
+        </div>
         <button id="tableToggle" onclick="toggleTable()"><div class="icon">➕</div> Toggle Table</button>
         <div id="timerContainer">
             <div class="icon">⏲</div> Duration (in minutes): <input type="number" id="duration" value="10">
@@ -97,6 +97,46 @@
             { name: 'No Oriented Question', description: 'Have you given up on ...? Is it ridiculous ...? Would it be horrible ...? Is it a bad idea ...?' },
             { name: 'Accusation Audit', description: 'Instead of denying it - you call it out. "It probably seems like..." whatever it may be.' }
         ];
+
+        // Tool categories for filtering
+        const toolCategories = {
+            'Active Listening': ['Minimal Encouragers', 'Exploratory Q\'s'],
+            'Empathy': ['Mirror', 'Label', 'Asking label', 'Mis-label'],
+            'Rapport': ['Vision label', 'advanced label', 'Clean Language'],
+            'Influence': ['Summary', 'Paraphrase', 'Loss Aversion', 'Dynamic Silence'],
+            'Behavioral Change': ['Trigger', 'No Oriented Question', 'Accusation Audit', 'Elevation']
+        };
+
+        function filterTools(stage) {
+            const tbody = document.getElementById('toolsTableBody');
+            tbody.innerHTML = ''; // Clear the current table
+
+            // Get the tools for the selected stage
+            const filteredTools = tools.filter(tool => toolCategories[stage].includes(tool.name));
+
+            // Populate the table with the filtered tools
+            filteredTools.forEach(tool => {
+                const row = document.createElement('tr');
+                const nameCell = document.createElement('td');
+                const descCell = document.createElement('td');
+                const countCell = document.createElement('td');
+                const input = document.createElement('input');
+
+                input.type = 'number';
+                input.value = tool.name === 'Dynamic Silence' ? 3 : 1;
+                input.id = tool.name.replace(/ /g, '_');
+
+                nameCell.textContent = tool.name;
+                descCell.textContent = tool.description;
+                countCell.appendChild(input);
+
+                row.appendChild(nameCell);
+                row.appendChild(descCell);
+                row.appendChild(countCell);
+
+                tbody.appendChild(row);
+            });
+        }
 
         function displayToolsInTable() {
             const tbody = document.getElementById('toolsTableBody');
