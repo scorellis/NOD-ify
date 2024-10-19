@@ -30,6 +30,13 @@
                 <!-- Rows will be added by the script -->
             </tbody>
         </table>
+        <div id="navBarStages" style="display: flex; justify-content: center; margin-top: 20px;">
+            <button onclick="filterTools('Active Listening')">Active Listening</button>
+            <button onclick="filterTools('Empathy')">Empathy</button>
+            <button onclick="filterTools('Rapport')">Rapport</button>
+            <button onclick="filterTools('Influence')">Influence</button>
+            <button onclick="filterTools('Behavioral Change')">Behavioral Change</button>
+        </div>        
         <button id="tableToggle" onclick="toggleTable()"><div class="icon">➕</div> Toggle Table</button>
         <div id="timerContainer">
             <div class="icon">⏲</div> Duration (in minutes): <input type="number" id="duration" value="10">
