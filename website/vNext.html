@@ -80,6 +80,7 @@
     <script>
         const tools = [
             { name: 'Mirror', description: 'Expansion, rapport: Repeat last 1 to 3 words. Repeat 1 to 3 words of the core concept.' },
+            { name: 'Mirror-AL', description: 'Expansion, rapport: Repeat last 1 to 3 words. Repeat 1 to 3 words of the core concept.' },
             { name: 'Label', description: 'It seems like ...It sounds like ... It looks like ... It feels like ... A negative label is worth 7x. Address the negatives first. it\'s not a sin to get a bad deal...it\'s a sin for it to take a long time' },
             { name: 'Asking label', description: 'Converts a calibrated question into a label that is a question. \"How would you like to proceed\" becomes "Seems like you have an idea of how to proceed?\" with upward tonality at the end'},
             { name: 'Mis-label', description: 'Try and limit to 3 of these. It\'s a potent tool to elicit information. People have correction addiction.'},
@@ -94,6 +95,7 @@
             { name: 'Loss Aversion', description: 'Losses lead to more extreme emotional responses than gains. The pain of losing is psychologically twice as powerful as the pleasure of gaining.' },
             { name: 'Dynamic Silence', description: 'Silence is uncomfortable and awkward. Plan on being silent for 3+ seconds. Counterpart will usually break silence in 7 seconds. Try counting in your head to help pass the time. Use any tool afterward.' },
             { name: 'Trigger', description: 'Cause a strong emotional reaction of fear, shock, anger, or worry in someone, especially because they are made to remember something bad that has happened in the past.' },
+            { name: 'Trigger-BC', description: 'Cause a strong emotional reaction of fear, shock, anger, or worry in someone, especially because they are made to remember something bad that has happened in the past.' },
             { name: 'No Oriented Question', description: 'Have you given up on ...? Is it ridiculous ...? Would it be horrible ...? Is it a bad idea ...?' },
             { name: 'Accusation Audit', description: 'Instead of denying it - you call it out. "It probably seems like..." whatever it may be.' }
         ];
@@ -104,7 +106,7 @@
             'Empathy': ['Mirror', 'Label', 'Asking label', 'Mis-label'],
             'Rapport': ['Vision label', 'advanced label', 'Clean Language'],
             'Influence': ['Summary', 'Paraphrase', 'Loss Aversion', 'Dynamic Silence'],
-            'Behavioral Change': ['Trigger', 'No Oriented Question', 'Accusation Audit', 'Elevation']
+            'Behavioral Change': ['Trigger-BC', 'No Oriented Question', 'Accusation Audit', 'Elevation']
         };
 
         function filterTools(stage) {
